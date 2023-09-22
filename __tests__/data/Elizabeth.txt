@@ -1,0 +1,40 @@
+/P Randomised responses
+
+/ The Script begins with Welcome, Void, No-Keyword and Quit responses:
+W HELLO, I'M BETTY. WHAT WOULD YOU LIKE TO TALK ABOUT?
+V CAN'T YOU THINK OF ANYTHING TO SAY?
+N TELL ME WHAT YOU LIKE DOING.
+
+/ Next come the Input transformations:
+I mum => mother
+I dad => father
+
+/ Then the Output transformations:
+O i am => YOU ARE
+O you are => I AM
+O i => YOU
+O me => YOU
+O you [] => ME
+O you => I
+O my => YOUR
+O your => MY
+O myself => YOURSELF
+O yourself => MYSELF
+O I IS => I AM
+O YOU IS => YOU ARE
+
+/ And four groups of Keyword transformations:
+K I THINK [phrase]
+ R WHY DO YOU THINK [phrase] ?
+
+K MOTHER
+K FATHER
+ R TELL ME MORE ABOUT YOUR FAMILY.
+ R ARE YOU THE YOUNGEST IN YOUR FAMILY?
+ R WHAT DO YOU REMEMBER MOST ABOUT YOUR CHILDHOOD?
+
+K [phrase1] IS YOUNGER THAN [phrase2]
+ R SO [phrase2] IS OLDER THAN [phrase1] .
+
+K I LIKE [word]ING
+ R HAVE YOU [word]ED AT ALL RECENTLY?
