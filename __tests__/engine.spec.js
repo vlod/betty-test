@@ -26,7 +26,9 @@ describe("engine", () => {
     expect(data.outputs.length).toBe(0);
 
     expect(data).toHaveProperty("welcomeMessage");
-    expect(data.welcomeMessage).toBe("WELCOME, I YOUR AI OVERLORD, BOW TO ME!");
+    expect(data.welcomeMessage).toBe(
+      "WELCOME, I AM YOUR AI OVERLORD, BOW TO ME!"
+    );
 
     expect(data).toHaveProperty("voidResponseMessage");
     expect(data.voidResponseMessage).toBe(

@@ -44,7 +44,7 @@ const initialize = (schmemaTextFile) => {
   /**@type {InputOutputPair[]} */
   const schemaOutputs = [];
 
-  let schemaWelcome = "WELCOME, I YOUR AI OVERLORD, BOW TO ME!";
+  let schemaWelcome = "WELCOME, I AM YOUR AI OVERLORD, BOW TO ME!";
   let schemaVoidResponse =
     "I KNOW I INTIMIDATE YOU, BUT I COMMAND YOU TO SPEAK TO ME!";
   let schemaNoKeywordReponse =
