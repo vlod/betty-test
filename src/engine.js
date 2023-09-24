@@ -1,5 +1,10 @@
 //@ts-check
 
+let engineData;
+
+// where we can publish event for others
+// let eventPublisher;
+
 /**
  * Fake Enum for buckets
  * @readonly
@@ -13,12 +18,6 @@ const SchemaBucket = {
   noKeywordReponseMessage: "noKeywordReponseMessage",
 };
 
-/**
- * This is what SchemaBucket maps to.
- *
- * @typedef { {match: string, replacement: string} } InputOutputPair
- */
-
 const welcomeRegex = /^W\s/;
 const voidResponseRegex = /^V\s/;
 const nokeywordResponseRegex = /^N\s/;
@@ -27,10 +26,15 @@ const inputRegex = /^I\s/;
 const inputOrOutputRegex = /^(I|O)\s/;
 
 /**
+ * This is what SchemaBucket maps to.
+ *
+ * @typedef { {match: string, replacement: string} } InputOutputPair
+ */
+
+/**
  * Load the engine with the schema
  *
  * @param {string} schmemaTextFile - schema
- * @return {Record<SchemaBucket, InputOutputPair[]|string>}} - {inputs: []}
  *
  * @example
  *
@@ -89,17 +93,54 @@ const initialize = (schmemaTextFile) => {
       }
     }
   });
-  return {
+  engineData = {
     [SchemaBucket.inputs]: schemaInputs,
     [SchemaBucket.outputs]: schemaOutputs,
     [SchemaBucket.welcomeMessage]: schemaWelcome,
     [SchemaBucket.voidResponseMessage]: schemaVoidResponse,
     [SchemaBucket.noKeywordReponseMessage]: schemaNoKeywordReponse,
   };
+
+  // let anyone know who's interested
+  document.dispatchEvent(
+    new window.CustomEvent("SCRIPT_LOADED", {
+      detail: {
+        id: Date.now(),
+        type: "SCRIPT_LOADED",
+      },
+    })
+  );
 };
 
+const emitEvent = (event, eventType, data) => {
+  var e = new window.CustomEvent(event, {
+    detail: {
+      id: Date.now(),
+      type: eventType,
+      data,
+    },
+  });
+  document.dispatchEvent(e);
+};
+
+const processUserInput = (userInput) => {
+  console.log("### engine got user-input:", userInput);
+
+  emitEvent("EVENT_LOG_CLEAR");
+  emitEvent("EVENT_LOG", "UserInput", userInput);
+
+  const bettyResponse =
+    "I'VE JUST HATCHED, BUT I CAN PRETEND WHAT YOU'RE SAYING IS INTERESTING. PLEASE GO ON";
+  emitEvent("EVENT_BETTY_RESPONSE", "Response", bettyResponse);
+  emitEvent("EVENT_LOG", "Response", bettyResponse);
+};
+
+const data = () => engineData;
+
 const engine = {
-  initialize: initialize,
+  initialize,
+  processUserInput,
+  data,
 };
 
 export default engine;
